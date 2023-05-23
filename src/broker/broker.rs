@@ -62,3 +62,53 @@ impl Broker {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::{error::Error, sync::mpsc};
+
+    #[test]
+    fn test_broker_pubsub() -> Result<(), Box<dyn Error>> {
+        let (broker, op_sender) = Broker::new();
+        broker.run();
+
+        let (sender, receiver) = mpsc::channel();
+
+        op_sender.send(Operation::Sub {
+            id: "1".to_string(),
+            sender: sender,
+        })?;
+
+        op_sender.send(Operation::Pub("hello".to_string()))?;
+
+        if let Ok(msg) = receiver.recv() {
+            assert_eq!(msg, "hello");
+        }
+        Ok(())
+    }
+
+    #[test]
+    fn test_broker_unsub() -> Result<(), Box<dyn Error>> {
+        let (broker, op_sender) = Broker::new();
+        broker.run();
+
+        let (sender, receiver) = mpsc::channel();
+
+        op_sender.send(Operation::Sub {
+            id: "1".to_string(),
+            sender: sender,
+        })?;
+
+        op_sender.send(Operation::Unsub("1".to_string()))?;
+
+        op_sender.send(Operation::Pub("hello".to_string()))?;
+
+        match receiver.recv() {
+            Ok(_) => Err(Box::<dyn Error>::from(
+                "Received message after unsubscribing",
+            )),
+            Err(_) => Ok(()),
+        }
+    }
+}
