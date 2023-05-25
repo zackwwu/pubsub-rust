@@ -10,7 +10,7 @@ jobs:
     name: validation
     runs-on: ubuntu-latest
     container:
-      image: zackwu1105/rust-dev:latest
+      image: zackwu1105/rust-dev:db35f1
       credentials:
         username: ${{secrets.DOCKER_USER}}
         password: ${{secrets.DOCKER_PASSWORD}}
