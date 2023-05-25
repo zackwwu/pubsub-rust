@@ -1,0 +1,23 @@
+name: ci
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+
+jobs:
+  validation:
+    name: validation
+    runs-on: ubuntu-latest
+    container:
+      image: zackwu1105/rust-dev:latest
+      credentials:
+        username: ${{secrets.DOCKER_USER}}
+        password: ${{secrets.DOCKER_PASSWORD}}
+    steps:
+      - uses: actions/checkout@v3
+      - name: rust-test
+        run: make test
+      - name: rust-lint
+        run: make lint
+
