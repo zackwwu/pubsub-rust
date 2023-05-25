@@ -13,13 +13,13 @@ pub struct Broker {
 impl Broker {
     pub fn new() -> (Broker, mpsc::Sender<Operation>) {
         let (sender, receiver) = mpsc::channel();
-        return (
+        (
             Broker {
                 subs: HashMap::new(),
                 receiver: Arc::new(Mutex::new(receiver)),
             },
             sender,
-        );
+        )
     }
 
     pub fn run(mut self) {

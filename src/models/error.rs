@@ -11,12 +11,7 @@ impl std::error::Error for PubSubError {}
 
 impl std::fmt::Display for PubSubError {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(
-            f,
-            "PubSubError: {}, caused by {}",
-            self.message,
-            self.cause.to_string(),
-        )
+        write!(f, "PubSubError: {}, caused by {}", self.message, self.cause)
     }
 }
 
@@ -30,6 +25,7 @@ impl From<mpsc::SendError<Operation>> for PubSubError {
 }
 
 impl PubSubError {
+    #[allow(dead_code)]
     pub fn new(message: String, cause: Box<dyn std::error::Error>) -> Self {
         PubSubError { message, cause }
     }

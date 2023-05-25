@@ -13,7 +13,7 @@ impl PubSub {
     pub fn new() -> PubSub {
         let (broker, sender) = Broker::new();
         let _thread = std::thread::spawn(move || broker.run());
-        return PubSub { sender: sender };
+        PubSub { sender }
     }
 
     pub fn subscribe(&self) -> Result<(String, mpsc::Receiver<String>), Box<dyn Error>> {
@@ -21,7 +21,7 @@ impl PubSub {
         let (sender, receiver) = mpsc::channel();
         match self.sender.send(operation::Operation::Sub {
             id: id.clone(),
-            sender: sender,
+            sender,
         }) {
             Ok(_) => Ok((id, receiver)),
             // improve error handling

@@ -19,7 +19,7 @@ help:
 
 rust-test:
 	@echo "Running tests..."
-	@cargo llvm-cov
+	@cargo llvm-cov --color always
 
 rust-lint:
 	@echo "Running lints..."
