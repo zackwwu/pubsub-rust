@@ -5,8 +5,8 @@
 *.so
 *.dylib
 
-# Test binary, built with `go test -c`
-*.test
+# target directory
+target/
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
@@ -14,12 +14,6 @@
 # Dependency directories (remove the comment below to include it)
 # vendor/
 node_modules
-
-# Build directory
-build/
-
-# Vendor directory
-vendor/
 
 .idea/
 .DS_Store
