@@ -1,5 +1,6 @@
 mod broker;
 mod models;
+
 use broker::broker::Broker;
 use models::{error, operation};
 use std::{error::Error, result::Result, sync::mpsc};
@@ -60,6 +61,11 @@ impl Drop for PubSub {
     }
 }
 
+impl Default for PubSub {
+    fn default() -> Self {
+        Self::new()
+    }
+}
 #[cfg(test)]
 mod tests {
     use super::*;
