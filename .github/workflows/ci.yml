@@ -16,8 +16,9 @@ jobs:
         password: ${{secrets.DOCKER_PASSWORD}}
     steps:
       - uses: actions/checkout@v3
-      - name: rust-test
-        run: make test
       - name: rust-lint
         run: make lint
+      - name: rust-test
+        run: make test
+
 
