@@ -23,6 +23,6 @@ rust-test:
 
 rust-lint:
 	@echo "Running lints..."
-	@cargo clippy --all -- -D warnings
+	@cargo clippy  --all --color always  -- -D warnings
 
 .DEFAULT_GOAL := help
